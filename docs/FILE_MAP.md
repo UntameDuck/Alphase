@@ -17,6 +17,7 @@ v4 추가·변경 기준: [UPGRADE_V4](UPGRADE_V4.md). 추가 모듈은 [provena
    ├─ configs/             실행 계약·recipe
    ├─ tests/               CPU 회귀·통합 검사
    ├─ docs/                현재 설계 기준과 파일별 계약
+   │  └─ assets/           README 전용 시각 자산
    ├─ runs/                데이터 무결성·train-only morphology 관측
    ├─ .venv/               Windows CPU 검증 환경 (제출하지 않음)
    └─ alphase.egg-info/    설치 메타데이터 (소스 기준 아님)
@@ -83,7 +84,7 @@ raw PNG 190장이나 제3자 패키지 내부 파일마다 중복 설계 문서�
 
 | 파일/폴더 | 계약 |
 |---|---|
-| `README.md` | 첫 진입 문서. 상단 v4 안내 우선, 이전 CLI 예시 보존. |
+| `README.md` | 첫 진입 문서. 프로젝트 개요, 모델 설계, 실행 흐름, 상태와 문서 탐색을 제공. |
 | `IMPLEMENTATION_STATUS.md` | v4 구현과 미검증 구분을 상단에 기록. 과거 표는 이력. |
 | `VALIDATION.md` | 과거 실행환경의 기록. 최신 결과는 docs/VERIFICATION.md. |
 | `pyproject.toml` | 패키지·Python 요구·entry point·SMP/timm pin. |
@@ -106,6 +107,7 @@ raw PNG 190장이나 제3자 패키지 내부 파일마다 중복 설계 문서�
 | `docs/RECOVERY_GUIDE.md` | 설치/OOM/중단/cache/불공정 비교/재현 실패/비용·제출 위험의 복구·중단 기준. |
 | `docs/FILE_MAP.md` | 이 파일; 문서 coverage의 기준. |
 | `docs/VERIFICATION.md` | 이번 검증 결과와 잔여 리스크. |
+| `docs/assets/readme-banner.png` | README 상단 ALPHASE 워드마크 배너. 모델·성능 정보는 포함하지 않는 장식 자산. |
 
 ## 책임 분리와 변경 원칙
 

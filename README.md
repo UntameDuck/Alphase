@@ -1,6 +1,6 @@
 <div align="center">
 
-# ALPHASE
+<img src="docs/assets/readme-banner.png" alt="ALPHASE" width="100%">
 
 ### Aluminum Phase Segmentation for KoMaP AI 2026
 
