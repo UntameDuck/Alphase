@@ -68,7 +68,7 @@
   "environment.yaml": "466b52ad7414e15b9219ad5d594ed6bf8ab3a585bdf74fd28b86b657edfc311e",
   "IMPLEMENTATION_STATUS.md": "7ac3b4b1990dc8eb774a4a69843c212be8b2491fc7537eec339933c1c509e5c1",
   "pyproject.toml": "3b4e13d77052b2ab44563f312bceff9c4c99978d38f233adf98406f89c69ee71",
-  "README.md": "983b5ac553bf6b263e32a081880f1bd2185df1d7c8ccf7520ca906dccd1273d4",
+  "README.md": "b9923b026ac17ed6d7a9d88b92303ffdc287914d7c35466ad3e94ccaf0ea5c46",
   "requirements.txt": "61bb949c8b704b50fe69b061ebdee80d9401e0732025f21dd258719486041954",
   "tests/fixtures.py": "8b4bbc202e6f30b83498ed759219b748ed6880569b9215ed05843232651e2a58",
   "tests/test_algorithms.py": "db992c9ee7435de60fcee50d7aae860a26793483bb72cdaa5769820299edae0c",

@@ -1,237 +1,368 @@
-# ALPHASE v0.4 — KoMaP 경쟁 설계·구현
+<div align="center">
 
-**현재 우선 기준: [v4 업그레이드·실험 프로토콜](docs/UPGRADE_V4.md).** 아래 v3/v2 설명에서 상충하는 재개·캐시·추천 동작보다 우선합니다.
+# ALPHASE
 
-**다음 작업을 시작할 때:** [단계별 행동 지침](docs/ACTION_GUIDE.md) → [실행 체크리스트](docs/EXECUTION_CHECKLIST.md). 실제 승인·비용·명령·결과는 [기록 양식](docs/EXECUTION_RECORD_TEMPLATE.md)을 복사해 남기고, 실패·중단 시 [복구 지침](docs/RECOVERY_GUIDE.md)을 따릅니다. 현재 다음 단계는 로컬 기준선 확인과 규정 확정이며, 문서 작성은 GPU 지출·학습·제출 승인이 아닙니다.
+### Aluminum Phase Segmentation for KoMaP AI 2026
 
-- 추가 후보: O(component sampling), L(per-image Lovasz), S(scSE decoder). 기본에 일괄 적용하지 않고 F와 단일 변경 비교합니다.
-- 완료 run 재학습 방지, self-contained `last.pt` 복구, immutable 평가·cache 출처 검증, 공정 조건·다수 seed 채택 게이트를 구현했습니다.
-- 재개는 v4 `last.pt`만 지원합니다. `best.pt`/`inference.pt`는 추론 전용이며 구버전 metrics/cache는 새 폴더에서 재평가합니다.
-- `package`는 manifest 대조와 반복 추론을 필수 실행합니다. `--device cpu|cuda|auto`로 장비를 지정합니다.
-- morphology: `python -m alphase morphology --data ../data --output runs/train_morphology_v4.json`.
-- GPU 지출·본학습·최종 성능·수상 입증은 아직 하지 않았습니다.
+작은 데이터에서도 희소한 조직과 경계를 놓치지 않도록 설계한 4상 의미론적 분할 파이프라인
 
-## v3 설계 및 기존 사용법
+[Overview](#overview) · [Architecture](#architecture) · [Competition Strategy](#competition-strategy) · [Quick Start](#quick-start) · [Reliability](#reliability) · [Roadmap](#roadmap) · [Documentation](#documentation)
 
-**현재 기준은 [설계 문서](docs/README.md)입니다.** 기존 기본 설정은 비교/호환용으로 보존했습니다.
+![Version](https://img.shields.io/badge/version-0.4.0-3563E9?style=flat-square)
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)
+![Task](https://img.shields.io/badge/task-4--class_segmentation-0F766E?style=flat-square)
+![Tests](https://img.shields.io/badge/CPU_tests-53_pass-22C55E?style=flat-square)
+![Status](https://img.shields.io/badge/status-pre--training-F59E0B?style=flat-square)
 
-- 주력: `configs/champion.json` — B3/U-Net++, 512 crop, phase/boundary sampler, EMA, 누적 학습.
-- 도전 모델: `configs/challenger.json` — ConvNeXt-Tiny/U-Net. 아직 검증 점수로 우열을 측정하지 않았습니다.
-- [모델 설계](docs/MODEL_DESIGN.md), [폴더·파일별 문서](docs/FILE_MAP.md), [실행·비용·마감](docs/RUNBOOK.md), [최신 검증](docs/VERIFICATION.md).
-- GPU 대여/지출/본학습/대회 제출은 미수행. 사전학습 허용·공식 제출 계약 확인이 필요합니다.
-- `pretrained=true` 학습은 `pretrained_permission=true`도 필요합니다. 확인된 경우에만 두 값을 설정하세요.
-- v0.2 checkpoint는 추론만 호환합니다. v0.3 재개는 config/data/source fingerprint가 같은 v3 checkpoint만 허용합니다.
-- TTA는 `--tta-mode none|flip|d4`; 기존 `--tta`는 flip입니다. `benchmark`는 GPU timing용이며 성능 시험이 아닙니다.
-- `SOURCE_SHA256.json`은 현재 소스 manifest, workspace 상위 `ALPHASE_code.zip`은 이전 v0.2 archive입니다.
+</div>
 
-```bash
-python -m unittest discover -s tests -v
-python -m alphase experiment-plan --config configs/champion.json --ids E F CN --seeds 42 --output plans/screen_v3
-# 아래 학습은 GPU 승인·규정·자원 probe 후에만 실행
-python -m alphase experiments --data ../data --plan plans/screen_v3/plan.json --output runs/screen_v3
+## Overview
+
+**ALPHASE**는 2026 KoMaP AI 대회의 알루미늄 합금 광학현미경 이미지에서 `Primary Si`, `Al3Ni`, `Eutectic Si`, `Al`을 픽셀 단위로 분할하기 위한 대회용 연구·실행 시스템이다.
+
+이 저장소는 단일 모델 구현을 넘어 데이터 무결성 검사, 재현 가능한 학습, 이미지별 mIoU 평가, 타일 추론, 제한된 앙상블, 제출물 검증과 clean-environment 재실행까지 하나의 흐름으로 묶는다. 공식 `train 70 / valid 20 / test 10` 분할을 보존하며 validation과 test를 학습 데이터로 사용하지 않는다.
+
+> `champion.json`은 현재의 **주력 설계안**을 뜻한다. 아직 GPU 본학습이나 대회 validation 성능 측정이 완료된 모델, 우승이 입증된 모델이라는 뜻은 아니다.
+
+### The challenge
+
+| 제약 | ALPHASE의 대응 |
+|---|---|
+| 학습 이미지가 70장으로 적음 | 강한 공간 증강, patch 학습, EMA, 제한된 후보 비교 |
+| 이미지마다 해상도가 다름 | 원본 비율을 유지한 crop 학습과 overlap tiled inference |
+| 작은 Eutectic Si 성분이 매우 많음 | train-only morphology와 component-aware sampling 후보 |
+| 상 경계가 가늘고 복잡함 | U-Net++, 경계 진단, 조건부 boundary loss |
+| 공식 평가는 이미지별 4상 mIoU | per-image metric, 상별 IoU, absent-class 정책 분리 |
+| 작은 표본에서 선택 편향이 큼 | 부모 대조군, 3-seed 확인, paired 비교와 보수적 채택 gate |
+| GPU 임대 환경은 중단될 수 있음 | self-contained checkpoint, 완료 run 보호, hash 기반 provenance |
+
+### Design principles
+
+| 원칙 | 의미 |
+|---|---|
+| **Evidence before complexity** | 실제 train 관측에서 출발한 가설만 독립 후보로 실험한다. |
+| **One change at a time** | sampler, loss, attention, boundary 항목을 한꺼번에 켜지 않는다. |
+| **Metric alignment** | crop loss만 보지 않고 원본 크기의 이미지별 mIoU로 선택한다. |
+| **Reproducibility by default** | source, config, data, checkpoint, cache를 hash와 fingerprint로 연결한다. |
+| **Submission over endless search** | 비슷한 점수라면 단순하고 재현 가능한 구성을 선택한다. |
+
+## Architecture
+
+```mermaid
+flowchart LR
+    A[Raw PNG<br/>train / valid / test] --> B[Integrity & contract checks]
+    B --> C[Train-only morphology]
+    C --> D[PatchDataset<br/>uniform / phase / boundary]
+    D --> E1[Core<br/>EfficientNet-B3 + U-Net++]
+    D --> E2[Challenger<br/>ConvNeXt-Tiny + U-Net]
+    E1 --> F[CE + Dice<br/>optional Lovasz / boundary]
+    E2 --> F
+    F --> G[AMP + AdamW + EMA]
+    G --> H[Overlap tiled inference]
+    H --> I[Per-image 4-class mIoU]
+    I --> J[Multi-seed decision gates]
+    J --> K[Repeatable submission package]
 ```
 
-## 이전 v0.2 사용 설명과 호환 명령
+### Model portfolio
 
-2026 KoMaP 알루미늄 합금 OM 이미지 4상 분할 코드. 실제 데이터 전체 본학습과 GPU 실행은
-수행하지 않았습니다. 데이터·학습 가중치는 코드 ZIP에 포함하지 않습니다.
+| ID | 모델 또는 단일 변경 | 역할 | 파라미터 |
+|---|---|---|---:|
+| A | ResNet34 + U-Net + CE | 최소 복잡도의 baseline | 설정 기반 측정 |
+| E | EfficientNet-B3 + U-Net++ + CE/Dice, uniform sampling | Core 구조 대조군 | 13,625,228 |
+| F | E + phase/boundary sampling | 현재 주력 recipe | 13,625,228 |
+| O | F + component-uniform phase sampling | 작은 Eutectic Si 노출 가설 | 13,625,228 |
+| L | F + per-image Lovasz-Softmax | IoU 정렬 목적함수 가설 | 13,625,228 |
+| S | F + decoder scSE | 특징 재가중 가설 | 13,715,677 |
+| G | F + classwise boundary loss | 경계 오류가 확인될 때의 후보 | 13,625,228 |
+| CN | ConvNeXt-Tiny + U-Net | 다른 표현 계열 및 앙상블 후보 | 31,929,188 |
 
-## 빠른 시작
+### Why this scale
 
-GPU용 PyTorch/torchvision이 설치된 Vast.ai PyTorch+Jupyter 또는 Colab GPU 환경을 사용하세요.
-RTX 5090은 Blackwell 지원 빌드가 필요합니다. 알려진 설치 조합 예시:
+70장의 학습 데이터에서 대형 foundation model을 무제한 탐색하는 대신, 검증 가능한 encoder-decoder와 데이터 특성에 맞춘 sampling/loss를 우선한다. 거대 모델이 항상 불리하다는 뜻이 아니라, 현재 데이터·예산·마감 조건에서는 **비교 가능한 가설과 안정적인 제출**이 더 높은 우선순위라는 판단이다.
 
-```bash
-python -m pip install torch==2.7.1 torchvision==0.22.1 --index-url https://download.pytorch.org/whl/cu128
-python -m pip install -r requirements.txt
-python -m unittest discover -s tests -v
-python -m alphase prepare --archives /path/to/zips --data data
-python -m alphase inspect --data data --official-counts --output runs/data_report.json
-python -m alphase train --data data --config configs/smoke.json --output runs/smoke --steps 1
+## Competition Strategy
+
+### 1. Data-grounded hypothesis
+
+70장 train mask만 분석한 결과, Eutectic Si는 8-connected 성분 63,393개 중 69.10%가 64 pixel 이하였고, 이 작은 성분들이 해당 상 픽셀의 23.40%를 차지했다. 반면 Primary Si의 64 pixel 이하 성분 비중은 3.18%였다.
+
+이 관측으로부터 기존 phase-pixel sampling이 큰 성분을 더 자주 고르는 편향을 가질 수 있다고 보고, **성분을 먼저 균등 선택하는 O 후보**를 만들었다. 이 수치는 물리적으로 독립된 입자 수나 실제 면적을 뜻하지 않으며, O가 mIoU를 높인다는 결론도 아니다. 효과는 F→O 단일 변경 실험으로 검증한다.
+
+### 2. Objective and sampling
+
+- 기본 목적함수: `0.5 × CE + 0.5 × image-present Dice`
+- L 후보: 기본 목적함수에 `0.2 × per-image Lovasz-Softmax` 추가
+- G 후보: F에 classwise boundary loss `0.05` 추가
+- 기본 crop 비율: `60% uniform / 25% phase / 15% boundary`
+- O 후보: phase branch에서 class → connected component → component pixel 순으로 균등 선택
+- EMA: 학습 가중치와 별도로 평가용 지수 이동 평균 가중치 유지
+
+### 3. Experiment ladder
+
+```mermaid
+flowchart TD
+    G0[G0 Local baseline & manifest] --> G1[G1 Official rules confirmed]
+    G1 --> G2[G2 Diagnostic cost approval]
+    G2 --> G3[G3 CUDA environment & integrity]
+    G3 --> G4[G4 Probe, smoke, benchmark]
+    G4 --> G5[G5 A / E / F / CN screen]
+    G5 -->|F beats E and budget remains| G6[G6 O / L, then S or G if justified]
+    G5 -->|No justified extension| G7[G7 Replicate top recipes]
+    G6 --> G7
+    G7 --> G8[G8 Limited TTA / ensemble]
+    G8 --> G9[G9 Final inference & report]
+    G9 --> G10[G10 Package & clean-GPU replay]
+    G10 --> G11[G11 Approved submission & archive]
 ```
 
-smoke.json은 작은 CPU 기능 검사 설정입니다. 실제 GPU smoke test를 할 때 config의
-device를 `cuda` 또는 `auto`로 변경합니다. Python 3.10 이상. GPU 드라이버와 빌드 호환은
-실제 GPU에서 확인해야 합니다. 이미 호환 PyTorch가 있으면 첫 설치 명령은 생략합니다.
-`python -m pip freeze > environment-lock.txt`로 실제 GPU 환경을 고정하세요.
+초기 screen은 같은 조건의 `A / E / F / CN`, seed 42로 시작한다. 후보 확장은 F가 E를 통과하고 시간·비용이 남을 때만 진행한다. 상위 최대 2개 recipe와 결론에 필요한 부모 대조군을 seeds `42 / 123 / 2026`으로 반복한다.
 
-## 데이터 계약
+증분 변경의 내부 채택 기준은 동일 source/config/data/budget에서 seed 평균 `+0.005 mIoU` 이상, 각 seed와 클래스의 IoU 하락 `0.02` 이내, 다수 seed 개선이다. 이는 선택을 보수적으로 만들기 위한 내부 규칙이며 통계적 유의성이나 수상 가능성을 보장하지 않는다.
+
+### 4. Inference and selection
+
+- 원본 해상도에서 overlap tile의 softmax 확률을 합성한다.
+- 최종 후보가 정해진 뒤에만 `none / flip / D4` TTA를 비교한다.
+- 앙상블은 최대 3개 모델의 확률 평균으로 제한한다.
+- validation 차이가 불확실하면 더 단순하고 빠른 구성을 우선한다.
+- test 이미지는 최종 출력 생성에만 사용하며 모델 선택이나 pseudo-label 학습에 사용하지 않는다.
+
+## Data Contract
 
 ```text
-data/train/images/*_image.png
-data/train/masks/*_mask.png
-data/valid/images/*_image.png
-data/valid/masks/*_mask.png
-data/test/images/*_image.png
+data/
+├── train/
+│   ├── images/*_image.png
+│   └── masks/*_mask.png
+├── valid/
+│   ├── images/*_image.png
+│   └── masks/*_mask.png
+└── test/
+    └── images/*_image.png
 ```
-
-이전 첨부 데이터 검사: train 70쌍, valid 20쌍, test 10장. 이미지/마스크는 opaque RGBA,
-해상도는 다양하고 각 이미지·마스크의 크기는 일치했습니다. 학습은 원본에서 crop,
-검증·추론은 타일 확률을 합성해 원본 크기로 복원합니다. 검증 이미지를 학습하지 않습니다.
-Unknown 색상·비투명 alpha·누락·크기 불일치·세트 간 정확 중복은 검사에서 거부합니다.
-A번호가 공식 train/valid 양쪽에 있어도 공식 분할을 유지하고 보고합니다.
 
 | ID | Phase | RGB |
-|---|---|---|
-|0|Primary Si|76,178,76|
-|1|Al3Ni|25,76,153|
-|2|Eutectic Si|204,204,204|
-|3|Al|153,127,76|
+|---:|---|---|
+| 0 | Primary Si | `76, 178, 76` |
+| 1 | Al3Ni | `25, 76, 153` |
+| 2 | Eutectic Si | `204, 204, 204` |
+| 3 | Al | `153, 127, 76` |
 
-## 학습·재개
+`inspect`는 파일 수, image-mask pairing, shape, palette, alpha, unknown color, split 간 정확 중복을 검사한다. 현재 확인된 원본은 입력과 GT를 합쳐 PNG 190개이며 저장된 archive의 PNG byte SHA와 일치한다. 원본 데이터와 mask는 Git 저장소에 포함하지 않는다.
 
-```bash
-python -m alphase train --data data --config configs/baseline.json --output runs/e0
-python -m alphase train --data data --config configs/core.json --output runs/core
-python -m alphase train --data data --config configs/core.json --output runs/core --resume runs/core/last.pt
-```
+## Quick Start
 
-Core = EfficientNet-B3/U-Net++; baseline = ResNet34/U-Net/CE; Edge = Core + rare sampler +
-경계 손실. soft Dice/CE, Focal+Dice, CE+Tversky와 class_weights를 config로 설정합니다.
-Edge 기본 boundary_weight=0.05; 향상은 미검증입니다. 최소 손실·증강·optimizer 설정을
-JSON에 저장하며 best/last 체크포인트, inference-only 가중치, config, 환경, CSV 로그를 생성합니다.
-CSV에 실제 클래스별 학습 노출 픽셀 수도 기록합니다. 학습 중 검증은 mIoU 중심으로 수행하고,
-경계/소형 성분 상세 분석은 별도 evaluate에서 수행해 매 epoch 부담을 줄입니다.
+### Requirements
 
-pretrained는 기본 false입니다. 외부 사전학습 허용 확인 후 true로 바꾸세요.
-num_workers=0으로 patch RNG 재개를 지원합니다. config·데이터 fingerprint가 달라지면
-재개를 거부합니다. GPU 간 bitwise 동일성을 보장하지 않습니다.
+- Python 3.10 이상
+- PyTorch 2.7 이상과 torchvision 0.22 이상
+- CUDA 학습 시 해당 GPU와 driver에 맞는 공식 PyTorch build
+- Linux GPU 환경에서는 Windows `.venv`를 복사하지 않고 새 환경을 만든다.
 
-## GPU 메모리 설정 탐색
+### Install
+
+CUDA용 `torch`와 `torchvision`은 먼저 [PyTorch 공식 설치 안내](https://pytorch.org/get-started/locally/)에서 GPU·driver에 맞는 명령으로 설치한다.
 
 ```bash
-python -m alphase tune --config configs/core.json --patches 256 512 --batches 2 4 8 --output configs/core_gpu.json
-python -m alphase train --data data --config configs/core_gpu.json --output runs/core
-# 단일 실험에서만 편리한 자동 탐색
-python -m alphase train --data data --config configs/core.json --output runs/core_auto --auto-tune
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m pip install -e . --no-deps
+python -m pip check
 ```
 
-AdamW 상태·forward/backward를 포함한 두 step GPU probe를 실행하고 메모리 여유를 남긴
-후 patch/batch를 고릅니다. 실데이터 OOM 방지를 보장하지는 않습니다. CPU에서는 명시적으로
-skip하고 config를 유지합니다. **공정한 ablation에서는 동일 patch/batch를 모든 설정에 사용**하세요.
-모델마다 auto-tune을 따로 적용하면 구조와 학습 조건 효과가 섞입니다. 재개 중 auto-tune은 금지됩니다.
+Windows PowerShell에서는 생성된 환경을 `./.venv/Scripts/Activate.ps1`로 활성화하거나, 저장소의 `./activate.ps1`을 사용한다.
 
-## 실험 자동화 — A–G와 H 추론 비교
+### Local verification — no GPU training
 
 ```bash
-python -m alphase experiment-plan --config configs/core.json --output plans/main --ids A B C D E F G DL --seeds 42 43
-python -m alphase experiments --data data --plan plans/main/plan.json --output runs/ablation
-python -m alphase compare --plan plans/main/plan.json --runs runs/ablation --output runs/comparison
+python -m unittest discover -s tests -v
+python -m alphase inspect \
+  --data ../data \
+  --official-counts \
+  --output runs/preflight_v4/data_report.json
 ```
 
-| ID | 변경 |
+### Build an experiment plan
+
+다음 명령은 계획 파일만 만들고 학습하지 않는다.
+
+```bash
+python -m alphase experiment-plan \
+  --config configs/champion.json \
+  --ids A E F CN \
+  --seeds 42 \
+  --output plans/screen_v4
+```
+
+실제 `experiments`, `train`, `tune`, `benchmark`는 공식 규정 확인, CUDA 환경 검사, 지출 한도 승인 후 [단계별 행동 지침](docs/ACTION_GUIDE.md)의 G0→G11 순서로 실행한다.
+
+### Core CLI
+
+| Command | Purpose |
 |---|---|
-|A|ResNet34/U-Net/CE|
-|B|EfficientNet-B3/U-Net/CE|
-|C|ResNet34/U-Net++/CE|
-|D|EfficientNet-B3/U-Net++/CE|
-|E|D + 0.5CE+0.5Dice|
-|F|v0.3: E + phase/boundary sampler|
-|G|v0.3: F + classwise boundary_weight=0.05|
-|CN|v0.3: ConvNeXt-Tiny/U-Net + phase/boundary sampler|
-|DL|DeepLabV3+/ResNet50|
-|Focal / Tversky|목적함수 대안|
-|Random / Pretrained|동일 Core 구조의 초기화 대조|
+| `inspect` | 데이터 구조·색상·중복·해시 검사 |
+| `morphology` | train-only connected-component 통계 생성 |
+| `tune` | GPU patch/batch 메모리 probe |
+| `benchmark` | 실제 crop 기반 학습 시간 측정 |
+| `train` | 단일 recipe 학습 및 안전한 resume |
+| `experiment-plan` | 공정한 ablation plan 생성 |
+| `experiments` | 계획에 따른 학습·평가·비교 실행 |
+| `evaluate` | 원본 크기 지표·패널·확률 cache 생성 |
+| `ensemble-search` | 고정된 cache에서 제한된 가중치 탐색 |
+| `infer` | test prediction 생성 |
+| `validate-output` | 파일명·크기·palette·alpha·개수 검사 |
+| `repeat-check` | 동일 명세 재추론과 PNG hash 대조 |
+| `package` | 보고서·코드·환경·가중치·예측 패키징 |
+| `verify-package` | 압축 해제 후 독립 재실행 검증 |
+| `budget` | 실측 epoch 시간과 시간당 요금으로 비용 추정 |
 
-희귀 클래스는 configs의 rare_class로 지정하며 train 분포만 보고 설정합니다. 기본은 Primary Si
-ID 0입니다. 가장 적은 픽셀 클래스와 반드시 같지 않으므로 EDA 후 수정하세요.
-Pretrained 실험은 규정 확인 후 `--allow-pretrained`로만 plan에 추가합니다.
-동일 base config·seed·최대 epoch budget을 유지합니다. Early stopping 실제 epoch는 달라질 수 있습니다.
-실험 runner는 학습·상세 평가·확률 캐시를 실행합니다. v0.3에서는 run_tta와 run_ensemble을
-기본 false로 두고 screen 후 선택된 후보에만 TTA/앙상블을 명시적으로 실행합니다.
-
-comparison CSV/JSON/Markdown은 이미지별 paired bootstrap, 클래스별 IoU, seed 평균/편차,
-encoder B−A, decoder C−A, interaction (D−C)−(B−A)를 기록합니다. 빈 클래스 정책과 GT hash가
-다른 결과는 비교하지 않습니다. 예정된 모든 seed가 측정된 후보만 추천합니다.
-F/G/TTA는 parent보다 mIoU가 최소 0.005 높고 어떤 클래스도 0.02 이상 악화되지 않을 때 추천 후보가 됩니다.
-이 규칙은 의사결정 보조용 가설이며 자동 성능 보증이 아닙니다. 검증 선택 편향을 고려하세요.
-
-## 상세 평가·시각화
+전체 옵션은 다음 명령에서 확인할 수 있다.
 
 ```bash
-python -m alphase evaluate --data data --checkpoint runs/core/best.pt --output runs/core/evaluation --cache
-python -m alphase evaluate --data data --checkpoint runs/core/best.pt --output runs/core/tta --cache --tta
+python -m alphase --help
+python -m alphase <command> --help
 ```
 
-metrics.json, RGB 예측, PNG 비교 패널, report.html, 선택적 float32 확률 npz를 생성합니다.
-지표는 이미지별 mIoU 평균이며, 클래스별 FP/FN·정밀도·재현율·면적, Boundary F1, 작은 GT 조직
-재현율을 제공합니다. Boundary tolerance는 기본 유클리드 거리 2픽셀, 8-neighbor inner boundary이며
-이미지 외곽은 제외합니다. 작은 성분은 8-connected, 기본 ≤64픽셀입니다. **작은 성분 재현율을
-instance IoU로 부르지 않습니다.** confidence는 보정되지 않은 softmax입니다.
+## Reliability
 
-공식 absent-class 처리는 미확정입니다. exclude(임시), zero, one을 `--absent-policy`로 선택하고,
-각 이미지의 세 정책 점수를 모두 기록합니다. absent는 GT·예측 모두 없는 union=0 클래스만 해당합니다.
+ALPHASE는 좋은 validation 점수뿐 아니라 **그 점수가 어떤 코드·데이터·가중치에서 나왔는지**를 보존하는 것을 모델 설계의 일부로 취급한다.
 
-## 앙상블 평가·가중치 탐색
+| Failure mode | Guardrail |
+|---|---|
+| 완료된 run을 실수로 다시 학습 | `completed`와 `stop_reason`을 확인하고 일치 run은 재사용 |
+| 중단 시 best/history 유실 | `last.pt`에 최고 EMA, epoch, metrics, 전체 history 포함 |
+| 다른 설정으로 잘못 resume | source/data/config/steps fingerprint 불일치 시 거부 |
+| stale evaluation/cache 혼합 | checkpoint SHA, inference fingerprint, input/GT hash 대조 |
+| 일부 seed만 끝난 후보 추천 | 누락 seed·부모 대조군·budget mismatch 후보 제외 |
+| 잘못된 PNG와 모델 패키징 | contract와 manifest 검사 후 동일 환경 반복 추론 |
+| 합성 smoke 점수를 성능으로 오인 | smoke/partial run을 추천 대상에서 제외 |
+
+평가는 전체 mIoU 외에 class IoU, precision/recall, FP/FN, boundary F1, 작은 GT 조직 recall, 2D phase-area fraction MAE를 기록한다. absent-class의 공식 처리 방식은 확정 전까지 `exclude / zero / one`을 분리해 기록하며, 확인되지 않은 정책을 공식 점수로 주장하지 않는다.
+
+## Technology
+
+| Layer | Technology |
+|---|---|
+| Training | PyTorch 2.7+, AMP, AdamW, EMA |
+| Segmentation | segmentation-models-pytorch 0.5.0 |
+| Encoders | timm EfficientNet-B3, ConvNeXt-Tiny |
+| Data | NumPy, Pillow, SciPy ndimage |
+| Metrics | image-wise mIoU, paired bootstrap diagnostics |
+| Artifacts | JSON, CSV, HTML, PNG, NPZ, SHA-256 manifest |
+| Packaging | inference-only weights, environment spec, report, verified predictions |
+| Tests | Python `unittest`, synthetic fixtures, workflow regression |
+
+## Repository Layout
+
+```text
+ALPHASE/
+├── alphase/                    # 데이터·모델·학습·평가·패키징 코드
+│   ├── data.py                 # 데이터 계약, dataset, augmentation
+│   ├── models.py               # segmentation model factory
+│   ├── sampling.py             # uniform/phase/boundary/component sampler
+│   ├── losses.py               # CE, Dice, Tversky, Lovasz, boundary loss
+│   ├── engine.py               # train, EMA, checkpoint, resume
+│   ├── inference.py            # tiled inference, TTA, ensemble
+│   ├── metrics.py              # mIoU와 상세 진단 지표
+│   ├── experiments.py          # ablation plan, runner, selection gates
+│   └── submission.py           # output validation과 package replay
+├── configs/                    # baseline, champion, challenger, O/L/S 후보
+├── docs/                       # 설계, 실행, 검증, 복구, 파일별 계약
+├── tests/                      # 53개 CPU 회귀 테스트
+├── runs/                       # 저장된 비학습 분석 결과만 Git 추적
+├── ALPHASE_Colab.ipynb         # GPU 작업용 notebook 진입점
+├── SOURCE_SHA256.json          # 직접 관리 소스의 무결성 manifest
+└── pyproject.toml              # alphase 0.4.0 package metadata
+```
+
+세부 파일 역할은 [폴더·파일 지도](docs/FILE_MAP.md), 각 Python 모듈의 입력·출력·불변 조건은 [`docs/modules`](docs/modules)에서 확인할 수 있다.
+
+## Project Status
+
+**기준일: 2026-10-11 KST**
+
+### Verified
+
+- CPU 환경에서 53개 고유 회귀 테스트 통과
+- 실제 데이터 `train 70 / valid 20 / test 10`, PNG 190개 무결성 확인
+- Core/O/L/S의 실제 128×128 crop forward, finite loss와 gradient 확인
+- Core 13,625,228 / scSE 13,715,677 / CN 31,929,188 파라미터 측정
+- self-contained resume, 완료 run hash 불변, cache provenance 검사 구현
+- 합성 fixture에서 package 생성과 별도 process 재추론 확인
+- 20개 코드 모듈과 파일별 설계 문서 작성
+
+### Not yet verified
+
+- 실제 CUDA 512 crop, AMP, VRAM, 처리 시간
+- 허용 조건이 확인된 pretrained 학습
+- 공식 validation의 실측 mIoU와 후보 간 우열
+- 총 GPU 비용과 Vast.ai clean-environment 재현
+- 외부 pretrained, absent-class, 최종 PNG/ZIP, 실행 파일 인정에 대한 공식 규정
+- 대회 제출과 수상 가능성
+
+CPU 테스트 통과는 GPU 호환이나 대회 성능의 증거가 아니다. 최신 증거와 한계는 [검증 기록](docs/VERIFICATION.md)에 유지한다.
+
+## Roadmap
+
+- [x] 데이터 계약과 원본 무결성 검사
+- [x] Core/Challenger 및 O/L/S 후보 구현
+- [x] 평가·resume·cache·package 재현성 장치
+- [x] CPU 회귀 테스트와 단계별 실행 문서
+- [ ] 공식 규정 4종 확정
+- [ ] 승인된 GPU에서 CUDA probe와 2-epoch smoke
+- [ ] A/E/F/CN 단일 seed screen
+- [ ] 조건을 통과한 O/L/S/G만 제한적으로 확장
+- [ ] 상위 recipe와 부모 대조군의 3-seed 반복
+- [ ] 제한된 TTA/ensemble 선택과 모델 동결
+- [ ] 최종 prediction, 보고서, package, clean-GPU replay
+- [ ] 사용자 승인 후 공식 제출 및 비용 정산
+
+## Documentation
+
+| Document | Read when |
+|---|---|
+| [Documentation Index](docs/README.md) | 프로젝트 문서의 우선순위와 읽는 순서를 확인할 때 |
+| [Action Guide](docs/ACTION_GUIDE.md) | 다음 행동을 G0부터 단계별로 실행할 때 |
+| [Execution Checklist](docs/EXECUTION_CHECKLIST.md) | 승인·산출물·통과 기준을 체크할 때 |
+| [Execution Record Template](docs/EXECUTION_RECORD_TEMPLATE.md) | 명령·비용·결과·SHA를 실행별로 기록할 때 |
+| [Model Design](docs/MODEL_DESIGN.md) | 구조, 목적함수, sampler, 버린 선택지를 검토할 때 |
+| [v4 Upgrade](docs/UPGRADE_V4.md) | O/L/S 후보와 최신 실험 protocol을 이해할 때 |
+| [Data & Evaluation](docs/DATA_AND_EVALUATION.md) | split, metric, output contract를 확인할 때 |
+| [Runbook](docs/RUNBOOK.md) | GPU 실행, 예산, 제출 절차를 준비할 때 |
+| [Recovery Guide](docs/RECOVERY_GUIDE.md) | 설치·OOM·resume·package 실패를 복구할 때 |
+| [Verification](docs/VERIFICATION.md) | 검증된 사실과 아직 모르는 것을 구분할 때 |
+
+## Budgeting
+
+GPU 비용은 CPU 테스트 시간이나 광고상 처리량으로 추정하지 않는다. 승인된 GPU에서 probe와 실제 epoch wall-clock을 측정한 뒤 현재 시간당 compute·storage·transfer 요금을 입력한다.
 
 ```bash
-python -m alphase evaluate --data data --checkpoint runs/core/best.pt runs/e0/best.pt --weights 0.75 0.25 --output runs/ensemble --tta
-python -m alphase ensemble-search --caches runs/core/evaluation runs/e0/evaluation --denominator 4 --output runs/ensemble_search.json
+python -m alphase budget \
+  --run runs/competition_v4/E_s42 \
+  --hourly-rate ACTUAL_USD_PER_HOUR \
+  --output runs/preflight_v4/budget_E.json
 ```
 
-CPU에 모델을 보관하고 GPU에는 한 모델씩 올립니다. CPU RAM에는 모든 가중치와 캐시를 위한 공간이
-필요합니다. search는 동일 validation 이미지·GT·정책·TTA 조건을 확인하고 simplex grid에서 가중치를
-선택합니다. 기본 0.25 간격; 2000 후보 제한. 검색한 검증 점수는 선택 편향이 있어 독립 검증이 아닙니다.
-선택된 best.weights와 cache metrics.json의 checkpoint 경로로 infer를 실행하세요.
+총예산에는 설치, 학습, validation, TTA/ensemble, 패키지 반복 추론, clean-GPU 재실행, 저장·전송 비용과 최소 25% 운영 여유를 포함한다. 보유 credit는 승인된 지출 한도와 같지 않다.
 
-## 실험적 후처리
+## References
 
-```bash
-python -m alphase postprocess --cache runs/core/evaluation --min-area 8 --confidence 0.6 --output runs/postprocess.json
-```
+- [2026 KoMaP AI Competition](https://komap.ai/front/competition2026/process1)
+- [KoMaP judging criteria](https://komap.ai/front/competition2026/award_info)
+- [PyTorch installation](https://pytorch.org/get-started/locally/)
+- [Segmentation Models PyTorch 0.5.0](https://smp.readthedocs.io/en/v0.5.0/models.html)
+- [The Lovasz-Softmax Loss](https://arxiv.org/abs/1705.08790)
+- [Concurrent Spatial and Channel Squeeze & Excitation](https://arxiv.org/abs/1803.02579)
 
-작고 낮은 확신도의 고립 성분을 주변 클래스 중 확률이 높은 상으로 재배정하는 **검증용 실험**입니다.
-기본 추론에는 적용하지 않습니다. 실제 작은 조직을 제거할 수 있으므로 효과 확인 전 제출에 사용하지 마세요.
+---
 
-## 테스트 출력·검사
+<div align="center">
 
-```bash
-python -m alphase infer --data data --checkpoint runs/core/inference.pt --output predictions/core --contract configs/submission_contract.json
-python -m alphase validate-output --data data --predictions predictions/core --contract configs/submission_contract.json --output runs/output_check.json
-python -m alphase repeat-check --data data --checkpoint runs/core/inference.pt --output predictions/core --contract configs/submission_contract.json
-```
+**Observe the data. Isolate the hypothesis. Reproduce the result.**
 
-동일 checkpoint/weights/TTA/contract로 repeat-check하세요. 파일 개수·이름·크기·RGB/RGBA·색상·alpha·해시를
-확인합니다. 기본 expected_count=10, RGB, *_mask.png는 **내부 임시 계약**입니다. 공식 형식 확인 후
-contract를 수정합니다. filename_map으로 공식 파일명을 각각 지정할 수 있습니다.
+ALPHASE v0.4.0 · Competition pipeline before GPU training
 
-## 제출 패키지 / 재실행
-
-```bash
-python -m alphase package --data data --predictions predictions/core --checkpoint runs/core/inference.pt --report final_report.pdf --receipt YOUR_RECEIPT --output submissions/YOUR_RECEIPT.zip --contract configs/submission_contract.json
-python -m alphase verify-package --data data --archive submissions/YOUR_RECEIPT.zip --python /path/to/clean-venv/bin/python --device cuda --output runs/package_check.json
-```
-
-package는 실제 최종 PDF 1~10쪽, 10개 출력, 확정 계약을 검사합니다. contract의 output_format_confirmed,
-absent_policy_confirmed가 true여야 하며 pretrained 사용 시 pretrained_allowed_confirmed도 true여야 합니다.
-**확인하지 않은 내용을 true로 바꾸지 마세요.** PDF 보고서, 소스·환경 YAML·추론 실행 스크립트·가중치,
-test_predictions.zip, SHA256 manifest를 receipt.zip으로 묶습니다. optimizer·train/valid GT·원본 데이터는
-제외합니다. 중첩 ZIP·실행 파일 요구·체크포인트 포함 허용은 운영 자료와 최종 대조해야 합니다.
-verify-package는 압축 해제·해시 검증·소스에서 추론 재실행·PNG hash 일치를 확인합니다.
-깨끗한 환경 설치는 사용자가 제공하는 별도 interpreter에서 실행하세요. 업로드/제출은 하지 않습니다.
-
-## 보고서 초안
-
-```bash
-python -m alphase report-draft --data-report runs/data_report.json --evaluation runs/core/evaluation/metrics.json --comparison runs/comparison/comparison.json --output runs/modeling_report_draft.md
-```
-
-실측 수치를 반영한 10개 항목의 편집용 Markdown 초안입니다. 최종 10쪽 PDF를 자동 보장하지 않습니다.
-템플릿·그림·선택된 모델 설정을 검토하고 최종 보고서를 별도로 편집합니다.
-
-## 파일 / 검증 범위
-
-`ALPHASE_Colab.ipynb`에 업로드·GPU 점검·Drive 저장·학습·평가·출력 명령을 포함했습니다.
-`IMPLEMENTATION_STATUS.md`는 설계 대비 구현 상태, `VALIDATION.md`는 실제 검증과 미검증 범위입니다.
-checkpoint는 직접 생성한 신뢰할 수 있는 파일만 로드합니다(torch pickle 사용).
-
-근거: https://komap.ai/front/competition2026/process1 · https://smp.readthedocs.io/en/latest/models.html ·
-https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.label.html · https://pytorch.org/get-started/previous-versions/
-
-## 측정 기반 예산 추정
-
-```bash
-python -m alphase budget --run runs/core --hourly-rate 0.432 --output runs/budget.json
-```
-
-현재 서비스 가격을 hourly-rate로 입력합니다. 측정한 epoch 시간을 외삽하며 저장·전송·다른 실험 비용은 포함하지 않습니다.
+</div>
