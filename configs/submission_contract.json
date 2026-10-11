@@ -1,0 +1,10 @@
+{
+  "expected_count": 10,
+  "input_suffix": "_image.png",
+  "output_suffix": "_mask.png",
+  "mode": "RGB",
+  "filename_map": null,
+  "absent_policy_confirmed": false,
+  "pretrained_allowed_confirmed": false,
+  "output_format_confirmed": false
+}

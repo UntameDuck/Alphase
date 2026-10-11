@@ -1,0 +1,30 @@
+# Generated from the verified CPU environment on 2026-10-10.
+-e file:///E:/Competition/%EC%BD%94%EB%A7%B5/ALPHASE
+certifi==2026.7.22
+charset-normalizer==3.5.2
+colorama==0.4.6
+filelock==3.32.3
+fsspec==2026.7.0
+huggingface-hub==0.30.2
+idna==3.20
+jinja2==3.1.6
+markupsafe==3.0.3
+mpmath==1.3.0
+networkx==3.6.1
+numpy==2.5.2
+packaging==26.3
+pillow==12.3.0
+pypdf==6.20.0
+pyyaml==6.0.3
+requests==2.34.2
+safetensors==0.8.0
+scipy==1.18.1
+segmentation-models-pytorch==0.5.0
+setuptools==78.1.0
+sympy==1.14.0
+timm==1.0.15
+torch==2.7.1+cpu
+torchvision==0.22.1+cpu
+tqdm==4.70.1
+typing-extensions==4.16.0
+urllib3==2.8.0

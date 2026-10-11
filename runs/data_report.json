@@ -1,0 +1,1304 @@
+{
+  "classes": [
+    "Primary Si",
+    "Al3Ni",
+    "Eutectic Si",
+    "Al"
+  ],
+  "palette": [
+    [
+      76,
+      178,
+      76
+    ],
+    [
+      25,
+      76,
+      153
+    ],
+    [
+      204,
+      204,
+      204
+    ],
+    [
+      153,
+      127,
+      76
+    ]
+  ],
+  "splits": {
+    "train": {
+      "count": 70,
+      "class_pixels": [
+        6428654,
+        17942376,
+        4757170,
+        39056688
+      ],
+      "records": [
+        {
+          "image": "A101_step3_sample3_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "d44e07dcaf4287b8deac14a956e97279ee6d0f0321af0efab2a4d8f1804fe093",
+          "class_pixels": [
+            55876,
+            324404,
+            58967,
+            637003
+          ],
+          "mask_sha256": "b9e9c4101788fe3829759072475ff1cd93ee8f0cc23f743aecafe177d96f5e15"
+        },
+        {
+          "image": "A106_step4_sample1_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "c28f7eb65fb03dcc870bb36a19bb75e44ee79246a5b33ad51f0f07403899f74d",
+          "class_pixels": [
+            67695,
+            329431,
+            54708,
+            624416
+          ],
+          "mask_sha256": "eb81fb8de655ce3c30c292dcafd1a2616ebdd46e20cf911421c5838adf71321a"
+        },
+        {
+          "image": "A108_step2_sample2_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "3007e9f1cc7293de5190156c2f58c2961cba48874f4d05a4271a2c37d016ddb0",
+          "class_pixels": [
+            81981,
+            350102,
+            77156,
+            567011
+          ],
+          "mask_sha256": "b234c8d5b408dc6109d36fa070039c17879e7ba420cf68ee482ea65ec487fd49"
+        },
+        {
+          "image": "A109_step1_sample3_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "23a1ff827c5007478aa0ab666819057c038dd09dc0844bdf996b23a7ed0a6628",
+          "class_pixels": [
+            55342,
+            352370,
+            79945,
+            588593
+          ],
+          "mask_sha256": "70d86b9d7f63363262a4ab24958f14fb869a6885f1c7c478ca18fd4796077f14"
+        },
+        {
+          "image": "A111_step1_sample2_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "23bb584cdd0c6fe091d368dfd4fa021b6039f9248a8a3743c65019ae41311470",
+          "class_pixels": [
+            16461,
+            193841,
+            111035,
+            754913
+          ],
+          "mask_sha256": "9b814afc3d72a7458773f032711b69dce9fd1177d5076e7d884f0f1639938a58"
+        },
+        {
+          "image": "A111_step3_sample4_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "9c30ceaf740882dac8bf82952a1847c9d5a3fd9842717320660be87742d37609",
+          "class_pixels": [
+            65668,
+            232067,
+            98166,
+            680349
+          ],
+          "mask_sha256": "c08a4f2fa8d5c7375cb4fa9d802f92d41af644b7019dec969b90091cf2bdc87d"
+        },
+        {
+          "image": "A118_step2_sample1_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "12471e5369373af2f3f5d0466388b0cba24001baa9b7ea26dddab52cccdbf0cc",
+          "class_pixels": [
+            53544,
+            228997,
+            91525,
+            702184
+          ],
+          "mask_sha256": "d09e568203a119414bcd19459cefbe96dd595b288850c0b60d15960aa4b24dab"
+        },
+        {
+          "image": "A121_step2_sample2_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "8e429f9dd04627f352a0ad4f394a2d5b1addba2965faf1fb8dd95fabc7f3459d",
+          "class_pixels": [
+            86145,
+            299219,
+            99936,
+            590950
+          ],
+          "mask_sha256": "e30574993cca8e0b0cfd8ead910226dc597f8f811a31d0dbc854dc47f72d9364"
+        },
+        {
+          "image": "A123_step1_sample1_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "44c8bc5c1b55b533dba4d7fc015c55ad214403cafb555ce2a8c67dff138094af",
+          "class_pixels": [
+            111524,
+            326676,
+            111594,
+            526456
+          ],
+          "mask_sha256": "7dd29738ab4f39a05322820460077daaaeea6c9af864356c8fdc8e35a7a91d6b"
+        },
+        {
+          "image": "A123_step4_sample2_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "d2dc47ce8f69f2465cfe94d7357e623fb7dd635c3e1132f276834719c08398db",
+          "class_pixels": [
+            25044,
+            315653,
+            106876,
+            628677
+          ],
+          "mask_sha256": "fc15bf9cb29d0e1d1021c7748f2c9704e4f8c721e76a59a12bc98be5ff368eb5"
+        },
+        {
+          "image": "A125_step2_sample1_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "da5bb3a2d35986c451e9b5cc20188d0594b75704d125804de0a6d931a73f7e45",
+          "class_pixels": [
+            26069,
+            266596,
+            142263,
+            641322
+          ],
+          "mask_sha256": "1ee9cc4da1916a27d8ad51684b009806e2f9503e0a24384ec65cd274080e3f83"
+        },
+        {
+          "image": "A130_step1_sample1_image.png",
+          "height": 1024,
+          "width": 1440,
+          "sha256_rgb": "60105b9d2044d17d11b13ad04ee09ae8e042e521a6001acd424a56c2333d7c32",
+          "class_pixels": [
+            199140,
+            463658,
+            85248,
+            726514
+          ],
+          "mask_sha256": "5d79d43f9ad87dd5ed904f2570a3fc13381b53f9abc5054bab77ae977d90dfc6"
+        },
+        {
+          "image": "A137_step4_sample2_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "afafc25e63f6c5cff09c58eddcabf00e3fbb4580b03f80b5e5c72b80469be20c",
+          "class_pixels": [
+            101610,
+            252041,
+            99876,
+            622723
+          ],
+          "mask_sha256": "d545725253e515cfd4260b0add4ca07d48c22fad65dcd3c88dcae59df349c45f"
+        },
+        {
+          "image": "A138_step4_sample3_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "f7e9cb2620bddb55592798539c8ecfca5d1620564b253da5af5237de4934dede",
+          "class_pixels": [
+            108367,
+            287664,
+            20296,
+            659923
+          ],
+          "mask_sha256": "7c92d33645a3cbed978eaa6fe42a29b8b635979b134197529ec0c027af61a3f9"
+        },
+        {
+          "image": "A139_step3_sample4_image.png",
+          "height": 1024,
+          "width": 1440,
+          "sha256_rgb": "da74d3e8a83407c466d73e68ec661d93c520ac732638bf1cb74b171604f8aa4e",
+          "class_pixels": [
+            80724,
+            459135,
+            21412,
+            913289
+          ],
+          "mask_sha256": "f3cfa487959925b6a4d5073a4fbd25754f3f0353d1980fef0206308c0e7611b1"
+        },
+        {
+          "image": "A139_step4_sample3_image.png",
+          "height": 1024,
+          "width": 1440,
+          "sha256_rgb": "f5ab86a5940b825e1a0c7000dd005f006a0350a82a71d53264d3da42d7573dbf",
+          "class_pixels": [
+            105065,
+            353188,
+            103210,
+            913097
+          ],
+          "mask_sha256": "6dcaafd00ad6757984f6d9accb691aba5d1d7d67f3d6647602cb41e751ab4d1d"
+        },
+        {
+          "image": "A140_step4_sample2_image.png",
+          "height": 1024,
+          "width": 1440,
+          "sha256_rgb": "343194f3b7737171fdeff55b7fad70c85c6e6fa17cd7c28f49826f7c6224827c",
+          "class_pixels": [
+            149596,
+            394693,
+            100871,
+            829400
+          ],
+          "mask_sha256": "516b5863fa4b60097320be56dd66010d64550df4aaf1e750f8d7c7ddce6c4a8c"
+        },
+        {
+          "image": "A146_step2_sample1_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "3a3f71c9ef5dd57c22144bf4fde49e84f7fd01c12c2a85e08cc3809fb754f868",
+          "class_pixels": [
+            128532,
+            392332,
+            77774,
+            563064
+          ],
+          "mask_sha256": "1119380aa7e90082b599359b65aafe25b57d7f113d0f69059a05a66fc66984c1"
+        },
+        {
+          "image": "A147_step4_sample4_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "1ea41e0ab51675146beebfec0bfd39ad3fcdfcdc439ccf90b2a44a59d5434501",
+          "class_pixels": [
+            161166,
+            503120,
+            19947,
+            477469
+          ],
+          "mask_sha256": "9a09feaf5e664f077bcc848c9ac3391c092becd1f7d9889195f7010f20403d27"
+        },
+        {
+          "image": "A150_step4_sample1_image.png",
+          "height": 1024,
+          "width": 1440,
+          "sha256_rgb": "8353119a5b6dc590319e3116bf89dc5fa1d35d5b87c22e183410d3f82349327a",
+          "class_pixels": [
+            190876,
+            476441,
+            112984,
+            694259
+          ],
+          "mask_sha256": "613fa2873b806374a27353df97e9299c265596f275a384c83006d27ffd986b6b"
+        },
+        {
+          "image": "A152_step2_sample1_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "d977f4be89e7b6041aa78f898758dcb8ef0f8a12926f2344064415be8751d455",
+          "class_pixels": [
+            123584,
+            251229,
+            77060,
+            709829
+          ],
+          "mask_sha256": "d857d184ddff3b3ed5739e1d6cda84f8dd9b11a7e64de3636230cb0354f48031"
+        },
+        {
+          "image": "A153_step1_sample4_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "b3697568537779a1813eb352068a16003898dbf0000c68c87531505dc3c933a3",
+          "class_pixels": [
+            77589,
+            236012,
+            103259,
+            744842
+          ],
+          "mask_sha256": "6c92d52bbd213f368e671bc09290557cfe43b2be644f67faf0c337ff6dab7a1f"
+        },
+        {
+          "image": "A154_step2_sample3_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "557c1d1525f30a03dc4457066bfdd46334906caff640548921cdeeb54fe51012",
+          "class_pixels": [
+            114098,
+            229615,
+            95737,
+            722252
+          ],
+          "mask_sha256": "34646cb2086f58342c07ec136dc728113c1e314d9a70a2957ffa0d4405f2a8e2"
+        },
+        {
+          "image": "A155_step3_sample2_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "6ac591be2f45f30fb6e92cc89e2153ae4d5bfbe7f23795c80f3b4a00f19dc108",
+          "class_pixels": [
+            142138,
+            403339,
+            67042,
+            549183
+          ],
+          "mask_sha256": "f28bb39cec5b5fc63a58cba89f29618fa01521bfc372c572007f1125b8855e7e"
+        },
+        {
+          "image": "A156_step4_sample1_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "fd1601221cb73ec72e6bdeec99e8102ccb92fd173cd695e10837edf2a35693e3",
+          "class_pixels": [
+            96922,
+            293372,
+            50703,
+            720705
+          ],
+          "mask_sha256": "86d32434977ec5b898eed7bd6b07f62ba90a110fd58b07ab4ac9d0ae06c4849f"
+        },
+        {
+          "image": "A156_step4_sample2_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "35a2496ee4b13e30efb2695feb17527d176dac42d4216d998b9f703e7db95103",
+          "class_pixels": [
+            108883,
+            314244,
+            45848,
+            692727
+          ],
+          "mask_sha256": "c69294cb5bd5ff6aacb6b8a1cfad9d0156841c9f40fab2a0ca9233e5584ced6e"
+        },
+        {
+          "image": "A159_step4_sample4_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "8fe6cc168a29424e9cf149d87e8783952d2561841137b73e1e6dd0f4eaa05fa5",
+          "class_pixels": [
+            147048,
+            383846,
+            24823,
+            605985
+          ],
+          "mask_sha256": "46e77b42cb87829a70e0c63c77ce90c7226959f8915403a702e5bee275eb369e"
+        },
+        {
+          "image": "A15_step1_sample1_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "11b6759ae281ba746719bbc384e29352343ea0c464a4edc8f05f9521534ef521",
+          "class_pixels": [
+            56150,
+            72027,
+            25240,
+            170583
+          ],
+          "mask_sha256": "d5883f84db9158a9a7d6b8edac9a6b9f41be7897f2acfaa00a07db54719a1547"
+        },
+        {
+          "image": "A164_step1_sample2_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "252671a209b18dc257bdd6e261af3ef8f88b7eba1cc554d52cb19fda12654338",
+          "class_pixels": [
+            119663,
+            318638,
+            21814,
+            701587
+          ],
+          "mask_sha256": "73dc24306039e0c85289949ae80478bed121bd0fb07c856e96c13ff771a07a0c"
+        },
+        {
+          "image": "A164_step4_sample1_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "bee7f83be36cfb0255039178ce0a01545bfab5d8fc25d8ba22ac603aeae608a0",
+          "class_pixels": [
+            142983,
+            342720,
+            68528,
+            607471
+          ],
+          "mask_sha256": "4bab8ff4491a95316b8da42f250e54a6192b9a3c3b27801316fceaf54c1c9183"
+        },
+        {
+          "image": "A166_step4_sample3_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "c0fc451a6594d956f06067fc3122f8020db0d08910615ae9a3efbdb36e19a985",
+          "class_pixels": [
+            87959,
+            302084,
+            81762,
+            689897
+          ],
+          "mask_sha256": "eeaaca8cb0a415a76f4f1dc103810e24309d9ad4d25d7dff233838ff0bde9f5e"
+        },
+        {
+          "image": "A167_step3_sample4_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "a871765423aa3cca3977b856784c47e3cdcd35e13a99dc1499ad7b37fd143e8a",
+          "class_pixels": [
+            134279,
+            442298,
+            59284,
+            525841
+          ],
+          "mask_sha256": "ab6e88bd0cf86995078d1979898728c0e5af2dd4ad29e041c62403091077fb56"
+        },
+        {
+          "image": "A16_step4_sample4_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "abe5783572060999961d7e257168727d8e3c780ef7d98f8944157c9f2d31e0d9",
+          "class_pixels": [
+            47524,
+            37735,
+            22841,
+            215900
+          ],
+          "mask_sha256": "28326fe36f95a2e1b80adcdddc2eb99cacefb40d69a964d0889e0d75fafdcdda"
+        },
+        {
+          "image": "A181_step4_sample4_image.png",
+          "height": 1024,
+          "width": 1440,
+          "sha256_rgb": "05ab39428da42163251bb8c87f7cf052a6bba041fc838f5756fe9ee2c7c3a4df",
+          "class_pixels": [
+            34894,
+            493868,
+            51866,
+            893932
+          ],
+          "mask_sha256": "165971724eb7cca69b23618aa41762a1f76eadc16462f9fea188afd4a00dfbae"
+        },
+        {
+          "image": "A182_step4_sample3_image.png",
+          "height": 1024,
+          "width": 1440,
+          "sha256_rgb": "98f30d58702eb238cbecc63b380cd1f5fa30f923e1c348453e04d0aa47e5c3d8",
+          "class_pixels": [
+            104376,
+            381876,
+            111443,
+            876865
+          ],
+          "mask_sha256": "2eb4a49d5ffee6f948c34b47d42cba2086eb3e617662d66b3ed323f8e9463973"
+        },
+        {
+          "image": "A187_step2_sample1_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "c0d1c92646914fc27a9c225183e81e760e533bbfc102a71aa8caaf474a04421f",
+          "class_pixels": [
+            101848,
+            335223,
+            60890,
+            578289
+          ],
+          "mask_sha256": "8e7919ef66598d795f895b8fa920174ae0d7008fdaef6961ae530cbfff05df83"
+        },
+        {
+          "image": "A187_step4_sample4_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "cfb05230e1ef4784b82da28da3b9648e00553903efe57251da78ac00ebcc711a",
+          "class_pixels": [
+            59188,
+            366893,
+            21629,
+            628540
+          ],
+          "mask_sha256": "f073400613b958b84cd4c545d506cc02ad5115ba639c387a54d764cf85cce741"
+        },
+        {
+          "image": "A188_step4_sample1_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "3db6244d7efd64c9c4cdd487da4983f94cc51fbe196d945e1940fff36f6b18ff",
+          "class_pixels": [
+            88961,
+            373031,
+            62427,
+            637283
+          ],
+          "mask_sha256": "19797631b1e8644e23ab14b9896836f9311802f00326eae79a3933ac573b0af0"
+        },
+        {
+          "image": "A18_step2_sample1_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "33c90613f5ff451d0f0c9978b9cc9ae190709f44716615ee5dce9cf2cf7272a2",
+          "class_pixels": [
+            69095,
+            49276,
+            16791,
+            188838
+          ],
+          "mask_sha256": "73ccc11a6c888b58d1b54a47800679ce97f65084469e7b66a06ceb43eb3a9a70"
+        },
+        {
+          "image": "A191_step3_sample1_image.png",
+          "height": 1024,
+          "width": 1440,
+          "sha256_rgb": "d54781b79607c1109a2073096643660d16c3b2cc01d6085515a653195c83a7cb",
+          "class_pixels": [
+            98512,
+            286728,
+            160116,
+            929204
+          ],
+          "mask_sha256": "5913ba6531e7818ac9d53e7903dacb0b7bcd0ba686b0f7b758107998f7d217e4"
+        },
+        {
+          "image": "A191_step4_sample1_image.png",
+          "height": 1024,
+          "width": 1440,
+          "sha256_rgb": "293fccd585916061a09c0bcb714b73521dc70029533b4a72b3a4731d4e05c630",
+          "class_pixels": [
+            45393,
+            332550,
+            134285,
+            962332
+          ],
+          "mask_sha256": "d9bda68a64c6350a841cfdb29e1933433b9271341deed6bcf2e18f83ce91495b"
+        },
+        {
+          "image": "A200_step4_sample3_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "b7fc5ee60b2e5e66d0e0b545a1dbed15aaf1fe92c47e59e4888b506267261919",
+          "class_pixels": [
+            122799,
+            322342,
+            41299,
+            675262
+          ],
+          "mask_sha256": "9cec89f1bef0ff472a8db56878c22154337b68bd8893d6f5844ab5639709493c"
+        },
+        {
+          "image": "A201_step3_sample1_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "e00a5972003bcf3d4772276af5de7259d2e1f9d49ae2c00646a7f6167e03bee1",
+          "class_pixels": [
+            74672,
+            330749,
+            82563,
+            588266
+          ],
+          "mask_sha256": "fc3140aa01b296849eec6b5a71a88ca5150b6cf303ffaa3febed3f750425dc9f"
+        },
+        {
+          "image": "A201_step3_sample4_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "873c58392c6d97603dcc9415def1edfd73e7f6eeb9f1031f751717c031832fde",
+          "class_pixels": [
+            51988,
+            327570,
+            69993,
+            626699
+          ],
+          "mask_sha256": "849ec291195a451aca342fec455bc43ffe7dda6412efc7abbeb27a57f210d185"
+        },
+        {
+          "image": "A21_step2_sample4_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "f6fb466c128b748294c3eb071eaf08ee1a09731a200737b8397cd7b08c6ce73f",
+          "class_pixels": [
+            137837,
+            110850,
+            136154,
+            776861
+          ],
+          "mask_sha256": "03b8dbaa0e5669708bd40cb5a43f347787b36e565f9a668df94ddb82cfdef50f"
+        },
+        {
+          "image": "A222_step2_sample2_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "62a6c1b4375e0a383410201de0c17a75361416aca073497fa9f409a352191da2",
+          "class_pixels": [
+            113784,
+            227575,
+            118299,
+            616592
+          ],
+          "mask_sha256": "8967c3ede7e0cd195cbe3d9a8a227ff4dc5d8c5c76e0d378aedbe428f9dcd19b"
+        },
+        {
+          "image": "A224_step1_sample2_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "771cb7615edb30efb4b2d8ee53fdc196909d02a82fb3f5bb56f4f591f7444658",
+          "class_pixels": [
+            145767,
+            328404,
+            120097,
+            481982
+          ],
+          "mask_sha256": "cb664c26fa6f9271fe8877025c90c35c7ef2d78dfc64459efc1bc0dfd98d92ab"
+        },
+        {
+          "image": "A224_step4_sample2_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "3fd91c58104347c73718d613c63c45a50a988833058a968f074a4cf55ce94c2f",
+          "class_pixels": [
+            113189,
+            415905,
+            60088,
+            487068
+          ],
+          "mask_sha256": "d3d2b2cd031645c9e066bd80f009a71fde8acc04d030f681e252332534724df1"
+        },
+        {
+          "image": "A2_step4_sample1_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "ba70385e1b9683d97204a57e3cd65de5a5d49409135ce0d4fcba39a6a86119de",
+          "class_pixels": [
+            173252,
+            313417,
+            131214,
+            543819
+          ],
+          "mask_sha256": "8b94b37c197d94d16063ab98e53824da06aef8ba6117105aea06780f869371f5"
+        },
+        {
+          "image": "A39_step2_sample3_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "0b84f7c2d673f52c45700d32085de5b98521ed44b2f00cf05a39d38ea50b8766",
+          "class_pixels": [
+            153192,
+            219707,
+            87570,
+            701233
+          ],
+          "mask_sha256": "eb863ec019f70ec40778ac29287eed77bcea9798936fbcd697f1f0e15a8fbeeb"
+        },
+        {
+          "image": "A40_step3_sample4_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "7008b6067ed1b543f2b6434edf7420a38f5208f007de7725848d0c3282a4a43a",
+          "class_pixels": [
+            175226,
+            276434,
+            84140,
+            625902
+          ],
+          "mask_sha256": "802c3c94845250d4086c7fc23abb3d6cad3c143218e512947aa2fc7a0bcf65e6"
+        },
+        {
+          "image": "A49_step2_sample2_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "a3c89e879868ac61261be7cb43bb952fae68acebefbd9587b90971d282f61882",
+          "class_pixels": [
+            250825,
+            248714,
+            71009,
+            591154
+          ],
+          "mask_sha256": "d0980e1c2ebcfd9777f8555e535c3fbf1ca2f8d4dbbc2072e2e6467c2bea362e"
+        },
+        {
+          "image": "A51_step4_sample4_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "9ccd792902ae6c2c7b8d680fee04fc2cc8068cde4fa7b3c7dada3c3cbfe9dbad",
+          "class_pixels": [
+            124401,
+            182984,
+            108909,
+            745408
+          ],
+          "mask_sha256": "55d3ef786a53d42402e868880fe51e70b1d96a7222be78830b47265ac4c27fa2"
+        },
+        {
+          "image": "A55_step3_sample4_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "9f261371e32465d3770b3f9895c2902a11c4633b60ee5bdb589f6e2e052a9e52",
+          "class_pixels": [
+            124661,
+            308959,
+            66152,
+            661930
+          ],
+          "mask_sha256": "2a67d465f32ec4d5d18f5cbe26707ec9413621c31cc92d215a5c5cfc49beffe3"
+        },
+        {
+          "image": "A57_step1_sample3_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "35df4aacde27b7348dce5d78bc0ff1b780fdbe44fbce49ac1056edb671ec4dd3",
+          "class_pixels": [
+            0,
+            30420,
+            58390,
+            235190
+          ],
+          "mask_sha256": "61e363c0ee6f6644aceb9411fcb1105235ed89b3e7ac9a0675f26f23142ecf6c"
+        },
+        {
+          "image": "A61_step2_sample2_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "8d7ef1218ee736f72e9ed5e36caa32c9adfe9b17f53b2b6ea0c64b4f5501a4ff",
+          "class_pixels": [
+            12305,
+            43854,
+            49606,
+            218235
+          ],
+          "mask_sha256": "3a0abeb32bfe1fc8cae1d0008295b7bb3a6118d463e6827142f13f0f96b2870f"
+        },
+        {
+          "image": "A64_step2_sample3_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "f6646f0fcd748e10e5db73652239580f0c34c403ae94458b3559c61d28001416",
+          "class_pixels": [
+            56129,
+            60852,
+            19391,
+            187628
+          ],
+          "mask_sha256": "ac69845b829833c9f2636889eac7def92346962d67e8c1737517032046dc089b"
+        },
+        {
+          "image": "A66_step3_sample2_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "bda44627bf70e44f0e4989c44bf17fbbb7d15f4771499a3069bada48f2bee8e3",
+          "class_pixels": [
+            30050,
+            56928,
+            9048,
+            227974
+          ],
+          "mask_sha256": "07f108e638c26f2760e58ee95838862ef73d06684a867fdea8cddb3a501e9462"
+        },
+        {
+          "image": "A69_step4_sample4_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "b30ff737482c0cad9950281b7329605915912c9fdf14e35a125402d05035d801",
+          "class_pixels": [
+            24728,
+            76636,
+            14445,
+            208191
+          ],
+          "mask_sha256": "80d41898b4dadfcf15d596c6409f916003a50f94583f20cb0b2b5460e4d9e40f"
+        },
+        {
+          "image": "A78_step4_sample1_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "ef21156a119cefba4b6d5ff625a66c97f94ec8893abcbe74c38eed59f30800ef",
+          "class_pixels": [
+            27754,
+            112297,
+            13205,
+            170744
+          ],
+          "mask_sha256": "37aea64a589c4c1c7b1d8959ddf69b9546d7c759c1207b1a7fc19e1138c4312b"
+        },
+        {
+          "image": "A7_step1_sample2_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "8b95b733c05c1878dabf4bff5f438f89a87ab3b89ba6929e4d80d1952ffd5b3f",
+          "class_pixels": [
+            236283,
+            102123,
+            75746,
+            747550
+          ],
+          "mask_sha256": "c484ec29f51bda56a6a1e922918ecec65bb40d6a4cdec00b01cf86d070356d89"
+        },
+        {
+          "image": "A7_step4_sample3_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "fbca9824156ce0d6503149f7288b4695a180019cda2bc974a444ab88f2c5b073",
+          "class_pixels": [
+            136540,
+            258033,
+            66387,
+            700742
+          ],
+          "mask_sha256": "24b2b53b8bb634e1761d4e045f5308047c326237aca8299fe23e488394f264cc"
+        },
+        {
+          "image": "A83_step1_sample2_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "1b30363c7dcbc569228fe4cc3a7d083c0f9c5bc6b6f937e6e1116b90708bde42",
+          "class_pixels": [
+            41308,
+            58688,
+            22879,
+            201125
+          ],
+          "mask_sha256": "6911b34ee058ac03ce391d4401e626da9114d4be1974477a042393c25985e74e"
+        },
+        {
+          "image": "A87_step2_sample2_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "ecf6471b64c8b3ddc5226199bb65c2df5024bdf83a793d3d93217ea58137adc3",
+          "class_pixels": [
+            16647,
+            53492,
+            39877,
+            213984
+          ],
+          "mask_sha256": "83e34acf5aa99c63134d2e7c3d59525f8f27dafc0cb7f3d9cd7443dd1021b548"
+        },
+        {
+          "image": "A89_step1_sample2_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "906a6d28cccab3c16640d779c2b47cc57a485c1f641d9b83a79a22bfab56fe8a",
+          "class_pixels": [
+            36350,
+            73838,
+            29251,
+            184561
+          ],
+          "mask_sha256": "bb08649c239f2c6aa1cde29c9c7754c78cfb7b2947b5978b2e2bbbf300ab6f0c"
+        },
+        {
+          "image": "A8_step2_sample3_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "a09d96539ef62e0643cf1408d719f2dc0e01fb8f37af06499c28a52b43a401a2",
+          "class_pixels": [
+            47300,
+            65720,
+            35286,
+            175694
+          ],
+          "mask_sha256": "d1b41d050d8baadd9d838266b9f228c7f9d70fa5860e19653472d3fa09b69088"
+        },
+        {
+          "image": "A8_step3_sample3_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "36d79a7a1260f3ba9a205e6a4cfe23bbf9b79e5895cf81e4aff233f497419d9c",
+          "class_pixels": [
+            64545,
+            68110,
+            32474,
+            158871
+          ],
+          "mask_sha256": "b1aea239f2433c7fc91d9b2edce293994da2ad97154ba978a848ae8d71aeae1c"
+        },
+        {
+          "image": "A94_step4_sample2_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "524bdb54ed601b999ce811f07ca42c7b58c7f80947ce25e8d0bc936fb64dc4d7",
+          "class_pixels": [
+            20364,
+            68206,
+            25091,
+            210339
+          ],
+          "mask_sha256": "44c99de80ead70a3cb3b05b5e8bf9cbda01e1415d4f02c9087b3092f30d7a0fd"
+        },
+        {
+          "image": "A96_step1_sample1_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "f292cf91115f231f020f307836aebcb27f4a765cbb83a3a746e9144b9df8d442",
+          "class_pixels": [
+            17191,
+            86671,
+            23902,
+            196236
+          ],
+          "mask_sha256": "6cdb047587366c3160780416e6767e37ed0ca4165d41eb0f1e38b8ddf18e02bf"
+        },
+        {
+          "image": "A98_step2_sample4_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "d493accb691b30ccac991c05c54df8817294534fe33a2b779aa83279f6429f47",
+          "class_pixels": [
+            28055,
+            64666,
+            27528,
+            203751
+          ],
+          "mask_sha256": "f3e103a443bc9c744b97f458848a474101188677acf72616bfd93a425242cc22"
+        }
+      ]
+    },
+    "valid": {
+      "count": 20,
+      "class_pixels": [
+        1602353,
+        3333686,
+        1206385,
+        9614836
+      ],
+      "records": [
+        {
+          "image": "A117_step4_sample2_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "17b55698ba689a5819c8a798ed66ecfa0ad675cb066dcdf484d01f20b2b286fb",
+          "class_pixels": [
+            69681,
+            211071,
+            126272,
+            669226
+          ],
+          "mask_sha256": "7e1a9f47c17443ae1c4c6c914b5847f64622a449752683766f1e28851ad3843a"
+        },
+        {
+          "image": "A11_step1_sample4_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "64a6701177705333c75ab6ec753146f5e44e5ce575ba1eaae075b912406523dc",
+          "class_pixels": [
+            48670,
+            24442,
+            26512,
+            224376
+          ],
+          "mask_sha256": "52c20e1e40f9f119261ba4079dc38feac5b22db567874e24668645f4ded8e8e0"
+        },
+        {
+          "image": "A11_step2_sample4_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "cb2816b5102853f634b86aff837cd2c874f8a0fd2b5b8aca230beced450cf729",
+          "class_pixels": [
+            73118,
+            34520,
+            22656,
+            193706
+          ],
+          "mask_sha256": "2e4cb92fd7c60459a6f84048f1418160212674dd585ba858088779409790ff2a"
+        },
+        {
+          "image": "A125_step1_sample4_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "045cdfec99868ca157d0a05539aca4ef133d566535b9a80ff71b51e6ccf4debe",
+          "class_pixels": [
+            66646,
+            268100,
+            152327,
+            589177
+          ],
+          "mask_sha256": "e2cee55adaa8171db1e788dd604acd80ba15d292a2d3dcad3064097712c0f42d"
+        },
+        {
+          "image": "A153_step3_sample3_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "18ff8540a033c3bae954093644d845ce67b614f798a2425c2f4f567509ddecc7",
+          "class_pixels": [
+            71170,
+            294177,
+            10404,
+            785951
+          ],
+          "mask_sha256": "cc8c59abc0d1a85994a42abb64f99f010a79db085844bb0a7f8468c1c9d2b188"
+        },
+        {
+          "image": "A170_step4_sample3_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "98de5576f360de28b251f465ca46e70f6e153dd7ea1f2a55838b742c309865cb",
+          "class_pixels": [
+            34018,
+            105727,
+            22012,
+            162243
+          ],
+          "mask_sha256": "33884be7948558721235c035a239d57b4fbf6917988b2af719c8c73314f05858"
+        },
+        {
+          "image": "A181_step1_sample1_image.png",
+          "height": 1024,
+          "width": 1440,
+          "sha256_rgb": "5afb7da122c423e2b068f51907e965fe015a28275fedec22c22b2ad2f8e237fa",
+          "class_pixels": [
+            60237,
+            399326,
+            123850,
+            891147
+          ],
+          "mask_sha256": "6b23c62acf404f39fa47acbe60b1b9dccde2202535d33a39a32560dea363f243"
+        },
+        {
+          "image": "A186_step2_sample2_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "a9008134d44741c36d1dac951e370997fc3b7ddc44322755b54686cacfcc1ab3",
+          "class_pixels": [
+            146253,
+            334102,
+            23959,
+            657388
+          ],
+          "mask_sha256": "966df284a19574914e3b37e6e6337d6de6f55509bd0c3d4378902272250aa92c"
+        },
+        {
+          "image": "A191_step4_sample3_image.png",
+          "height": 1024,
+          "width": 1440,
+          "sha256_rgb": "e6cd759ba077f184c9ac9507e53cf044323ad92a5cf85391b8b52abf0a7e1c06",
+          "class_pixels": [
+            56696,
+            379909,
+            90477,
+            947478
+          ],
+          "mask_sha256": "7aaa8192d1be5a141078760cd3dcd716d358b7d020b261f84a72b5b5833eb787"
+        },
+        {
+          "image": "A40_step3_sample3_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "067178e53efeb3b3ea75816f6cbe0e17dc6c47bfe531ff52383648e5bb9487ef",
+          "class_pixels": [
+            178338,
+            256400,
+            95380,
+            631584
+          ],
+          "mask_sha256": "524d2ef250f9419d0f5144d3b740027c44d3ef036534148baafedac6c2e4f236"
+        },
+        {
+          "image": "A42_step2_sample4_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "31d1faece833344cdf4458904ebd94e764e2b3470b3780431c219a71b96809a0",
+          "class_pixels": [
+            128602,
+            139572,
+            100734,
+            707342
+          ],
+          "mask_sha256": "5357add176968a98f86bf6d06d4efdc3610c0a738aa87ce3486edf8e58222e70"
+        },
+        {
+          "image": "A44_step4_sample3_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "71a30e67d2dd3075f1b1f37ba1178a7d976bb72e90c73021d329ed2b70463c82",
+          "class_pixels": [
+            198029,
+            242796,
+            70180,
+            650697
+          ],
+          "mask_sha256": "fc9112c9063ecb309199817719bef329631353e5677082bd300588afc0d20f44"
+        },
+        {
+          "image": "A55_step2_sample1_image.png",
+          "height": 780,
+          "width": 1096,
+          "sha256_rgb": "ef0c742246288a492544940568f60ba3c4b9df4557dbd1b1d481e0d9ae8ac915",
+          "class_pixels": [
+            119140,
+            176050,
+            68712,
+            490978
+          ],
+          "mask_sha256": "954430e32e9ec1c4fa44e2d70f87ba48be63b3c1bda817e173482a9b12c95bdc"
+        },
+        {
+          "image": "A59_step3_sample1_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "7b5f3d83e16d13f03372c0b66bf3884157c3d99b4379431e695d49ba5455f871",
+          "class_pixels": [
+            37678,
+            70635,
+            19294,
+            196393
+          ],
+          "mask_sha256": "3e49bd7aa9998f3bdb361396f9d1bfe4028cf4417985c1b72171c1c31fccb024"
+        },
+        {
+          "image": "A63_step1_sample4_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "a2eeb490ccfb2dc18fd9398246994881eb0bb9e88fae28f0188efb9d8db7eb57",
+          "class_pixels": [
+            41745,
+            67532,
+            20960,
+            193763
+          ],
+          "mask_sha256": "6308e3dd66b1ee047b6aef79293961cfab9df611b2c81bbb0e58efcd3ce28d77"
+        },
+        {
+          "image": "A67_step1_sample1_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "8bfd433c215d5cd80779edae6aad5f796f46a39b6a783cdf0c74ff3e67308970",
+          "class_pixels": [
+            42205,
+            48192,
+            44926,
+            188677
+          ],
+          "mask_sha256": "6f66c94df93a5158f2f487c24cb1d422ad380d1614317bc4d34ee528f47d9e2a"
+        },
+        {
+          "image": "A71_step2_sample1_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "7eaa20746482f14459f17bf3178cda46669d290e300732a784bb3508f08d3397",
+          "class_pixels": [
+            0,
+            55029,
+            24223,
+            244748
+          ],
+          "mask_sha256": "3319f05cd9e2c676ddc76ae8acd10d9750cfe3d55b450e0fa4b0142c1318f333"
+        },
+        {
+          "image": "A72_step4_sample4_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "9feb97a3fa0653ed650cdcdaee27064e24579b53eea42eeff914773b108b8f67",
+          "class_pixels": [
+            12263,
+            46591,
+            48440,
+            216706
+          ],
+          "mask_sha256": "cb0062143cd19b3fa8bd9ddf3b48b9ce2c6ba6c0994a26e0f8e4705dcf0af0cb"
+        },
+        {
+          "image": "A74_step3_sample4_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "641637874cadb0ff3e8612021af6e4e5d40b61c53ef045fc566c26522216fbca",
+          "class_pixels": [
+            27363,
+            78410,
+            16636,
+            201591
+          ],
+          "mask_sha256": "11dcd0c6d4c4ffd8b631ef05a935dab31e69d7c9a3fbfef93d338cb7986453f5"
+        },
+        {
+          "image": "A7_step1_sample4_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "27153e0a70f5ff843e8fd6e490c89ed3c0b55410febf2b13f51b53491f968702",
+          "class_pixels": [
+            190501,
+            101105,
+            98431,
+            771665
+          ],
+          "mask_sha256": "1a0e81af8032f6a985d906953c0b3d6e209aa69e3b0cec86e5f9bcd80a1de56a"
+        }
+      ]
+    },
+    "test": {
+      "count": 10,
+      "class_pixels": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "records": [
+        {
+          "image": "A107_step1_sample3_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "9c6eabc69123c342321067397f1eaedd9afe4150d8a3d091b029760f30e5e7fe"
+        },
+        {
+          "image": "A122_step4_sample1_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "cbf812cb980a63cf5f3a0d5fdf365634cff5fc0705adecc60b32fbdca8c462f4"
+        },
+        {
+          "image": "A124_step4_sample3_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "c81abc3e861b003590b1033542edcd9cbf167cbaaff6a2726c516379c66be013"
+        },
+        {
+          "image": "A127_step3_sample2_image.png",
+          "height": 1024,
+          "width": 1440,
+          "sha256_rgb": "c4e0c3dfd0a17e42c2a889e957f6d41160912b72347125996ddce0fd7647eef4"
+        },
+        {
+          "image": "A133_step4_sample1_image.png",
+          "height": 875,
+          "width": 1230,
+          "sha256_rgb": "d46fe187284a3e4dbddf7b17007f86f51d99b39c6538528e7f51053f56632280"
+        },
+        {
+          "image": "A167_step3_sample3_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "c8bdb312ba64f1681a2bb35641a6599e1c026ff15acbe95fc1032af9ed4fb415"
+        },
+        {
+          "image": "A38_step2_sample2_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "2be270f16de3b37c240dca893a1c8c590b6e7006df187edfd22025231da2f3bd"
+        },
+        {
+          "image": "A51_step3_sample3_image.png",
+          "height": 909,
+          "width": 1278,
+          "sha256_rgb": "0943813411ae7ef9a46d9dabea467b8c7c1ddb5415bbafdc7547293dc275a85d"
+        },
+        {
+          "image": "A63_step2_sample3_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "a5e3ff58aeb7a89abd9c7c377107f2d84fb116c97fbe063a7f28d6c7cba8eba4"
+        },
+        {
+          "image": "A87_step1_sample4_image.png",
+          "height": 480,
+          "width": 675,
+          "sha256_rgb": "1b85cc1ec5a24b26d0b20c8025b89abfdbe2b56b8d45fec448e3362a0309bad6"
+        }
+      ]
+    }
+  },
+  "group_overlap_train_valid": [
+    "A125",
+    "A153",
+    "A181",
+    "A191",
+    "A40",
+    "A55",
+    "A7"
+  ]
+}

@@ -1,0 +1,34 @@
+# Local Python environments and generated package metadata
+.venv/
+alphase.egg-info/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Local credentials and machine-specific secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Generated experiment plans, model weights, caches, and submission artifacts
+plans/
+artifacts/
+runs/*
+!runs/data_report.json
+!runs/train_morphology_v4.json
+*.pt
+*.pth
+*.ckpt
+*.npz
+
+# Editor and operating-system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log

@@ -1,0 +1,16 @@
+name: alphase
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      - numpy>=1.26,<3
+      - Pillow>=10,<13
+      - scipy>=1.11,<2
+      - pypdf>=5,<7
+      - segmentation-models-pytorch==0.5.0
+      - timm==1.0.15
+      - huggingface-hub==0.30.2
+# Install GPU-compatible torch + torchvision before running the pipeline.
+# After GPU smoke test: python -m pip freeze > environment-lock.txt
